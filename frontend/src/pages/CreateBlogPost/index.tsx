@@ -8,6 +8,7 @@ import { Formik } from "formik";
 
 import * as Yup from "yup";
 import { CreateResultBody } from "../../types/Create";
+import { Link } from 'react-router-dom'
 
 interface FormData {
   title: string;
@@ -56,6 +57,7 @@ function CreateBlogPost() {
           isSubmitting,
           isValid,
           submitForm,
+          setFieldTouched
         }) => (
           <form onSubmit={handleFormikSubmit}>
             <Typography variant="h5" gutterBottom>
@@ -67,6 +69,11 @@ function CreateBlogPost() {
                   name="title"
                   label="Title"
                   onChange={handleChange}
+                  onInput={e => {
+                    console.log(isValid)
+                    setFieldTouched("title", true, true)
+                    handleChange(e);
+                  }}                  
                   onBlur={handleBlur}
                   value={values.title}
                   required
@@ -86,6 +93,11 @@ function CreateBlogPost() {
                   multiline
                   rows={10}
                   onChange={handleChange}
+                  onInput={e => {
+                    console.log(isValid)
+                    setFieldTouched("content", true, true)
+                    handleChange(e);
+                  }}                  
                   onBlur={handleBlur}
                   value={values.content}
                   required
@@ -101,15 +113,27 @@ function CreateBlogPost() {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid item sm={12}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={submitForm}
-                  disabled={isSubmitting || !isValid}
-                >
-                  Submit
-                </Button>
+              <Grid container spacing={3} direction="row">
+                <Grid item sm={2}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={submitForm}
+                    disabled={isSubmitting || !isValid || (touched.content ? !touched.content : true || touched.title ? !touched.title : true)}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+                <Grid item sm={2}>
+                  <Button 
+                    variant="contained"
+                    color="primary"        
+                    component={Link} 
+                    to={`/`}
+                  >
+                    Cancel
+                  </Button>
+                </Grid>              
               </Grid>
             </Grid>
           </form>
