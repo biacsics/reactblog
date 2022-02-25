@@ -32,7 +32,7 @@ export async function createBlog(title: string, content: string): Promise<Blog> 
     });
 }
 
-export async function updateBlog(id: string, title: string, content: string): Promise<any> {
+export async function updateBlog(id: string, title: string, content: string): Promise<Blog | undefined> {
     return await getConnection().transaction(async (manager) => {
         await manager.update(Blog, id, {title: title, content: content});
         const item = await manager.createQueryBuilder(Blog, 'blog').where({ id: id }).getOne();
