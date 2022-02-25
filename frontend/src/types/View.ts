@@ -3,4 +3,5 @@ export interface ViewData {
   title: string;
   content: string;
   publishedAt: string;
+  modifiedAt: string;
 }

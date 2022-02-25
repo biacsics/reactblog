@@ -5,7 +5,7 @@ export async function getBlogList(): Promise<Blog[]> {
     return await getConnection().transaction(async (manager) => {
         const items = await manager
             .createQueryBuilder(Blog, 'blog')
-            .select(['blog.id', 'blog.publishedAt', 'blog.title'])
+            .select(['blog.id', 'blog.publishedAt', 'blog.modifiedAt', 'blog.title'])
             .getMany();
 
         return items;
@@ -25,10 +25,17 @@ export async function createBlog(title: string, content: string): Promise<Blog> 
         const newBlogPost = new Blog();
         newBlogPost.title = title;
         newBlogPost.content = content;
-        newBlogPost.publishedAt = new Date();
+        // newBlogPost.publishedAt = new Date(); -> @CreateDateColumn()
 
         const item = await manager.save(newBlogPost);
+        return item;
+    });
+}
 
+export async function updateBlog(id: string, title: string, content: string): Promise<any> {
+    return await getConnection().transaction(async (manager) => {
+        await manager.update(Blog, id, {title: title, content: content});
+        const item = await manager.createQueryBuilder(Blog, 'blog').where({ id: id }).getOne();
         return item;
     });
 }

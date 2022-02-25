@@ -8,3 +8,5 @@ services:
       POSTGRES_DB: postgres
       POSTGRES_INITDB_ARGS: "-E UTF8"
       POSTGRES_PASSWORD: 4wesomePassword
+      TZ: 'GMT+1'
+      PGTZ: 'GMT+1'

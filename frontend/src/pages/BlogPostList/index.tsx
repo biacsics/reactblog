@@ -44,11 +44,20 @@ function BlogPostList() {
               {p.title}{" "}
             </Typography>
           </Link>
-          <Typography component="span" variant="subtitle2">
-                {formatDistanceToNow(new Date(p.publishedAt), {
+          {
+            p.publishedAt === p.modifiedAt ?
+              <Typography component="span" variant="subtitle2">
+                created {formatDistanceToNow(new Date(p.publishedAt), {
                   addSuffix: true,
                 })}
               </Typography>
+           :
+              <Typography component="span" variant="subtitle2">
+                modified {formatDistanceToNow(new Date(p.modifiedAt), {
+                  addSuffix: true,
+                })}
+              </Typography> 
+          }
         </div>
       ))}
     </Box>

@@ -6,6 +6,7 @@ import Navigation from "../components/Navigation";
 
 import BlogPostList from "../pages/BlogPostList";
 import CreateBlogPost from "../pages/CreateBlogPost";
+import EditBlogPost from "../pages/EditBlogPost";
 import ViewBlogPost from "../pages/ViewBlogPost";
 
 function Router() {
@@ -23,6 +24,10 @@ function Router() {
         <Route path="/create" exact>
           <CreateBlogPost />
         </Route>
+        <Route path="/edit/:id" exact>
+          <EditBlogPost />
+        </Route>
+
       </Switch>
     </BrowserRouter>
   );

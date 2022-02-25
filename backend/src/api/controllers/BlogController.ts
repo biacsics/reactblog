@@ -1,4 +1,4 @@
-import { Get, JsonController, Param, Post, BodyParam } from 'routing-controllers';
+import { Get, JsonController, Param, Post, BodyParam, Patch } from 'routing-controllers';
 import { BlogListResult, CreateBlogResultBody, SingleBlogResult } from '../../typings/Blog';
 import * as BlogService from '../../blog/Blog';
 
@@ -25,4 +25,15 @@ export default class BlogController {
 
         return item;
     }
+
+    @Patch('/:blogId')
+    async updateItem(
+        @Param('blogId') blogId: string,
+        @BodyParam('title') title: string,
+        @BodyParam('content') content: string
+    ): Promise<SingleBlogResult | undefined> {
+        const item = await BlogService.updateBlog(blogId, title, content);
+        return item;
+    }
+
 }

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 
 import { useRouteMatch } from "react-router-dom";
 import { ViewData } from "../../types/View";
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box, Button } from "@material-ui/core";
 
 import { formatDistanceToNow } from "date-fns";
+
+import { Link } from 'react-router-dom'
 
 function ViewBlogPost() {
   const match = useRouteMatch<{ id: string }>("/view/:id");
@@ -33,13 +35,28 @@ function ViewBlogPost() {
   const formattedDate = formatDistanceToNow(new Date(data.publishedAt), {
     addSuffix: true,
   });
+  const formattedModDate = formatDistanceToNow(new Date(data.modifiedAt), {
+    addSuffix: true,
+  });
+
+  let modified: boolean = data.publishedAt !== data.modifiedAt;
 
   return (
     <Box m={2}>
       <Typography variant="h5" gutterBottom>
-        {data.title} <Typography component="span">{formattedDate}</Typography>
+       <span style={ modified ? { color: 'rgb(150,100,0)'} : {}}>{data.title} </span>  
+        <Typography component="span" style={ modified ? { display: 'none'} : {}}> created {formattedDate}</Typography>
+        <Typography component="span" style={ !modified ? { display: 'none'} : {}}> modified {formattedModDate}</Typography>
       </Typography>
       <Typography variant="body1">{data.content}</Typography>
+      <Button 
+        variant="contained"
+        color="primary"        
+        component={Link} 
+        to={`/edit/${postId}`}
+      >
+        edit
+      </Button>
     </Box>
   );
 }
