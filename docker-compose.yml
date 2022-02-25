@@ -1,0 +1,10 @@
+version: "3.4"
+services:
+  postgres:
+    image: postgres:alpine
+    ports:
+      - "25432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_INITDB_ARGS: "-E UTF8"
+      POSTGRES_PASSWORD: 4wesomePassword
