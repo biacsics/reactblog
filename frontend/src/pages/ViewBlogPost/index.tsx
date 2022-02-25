@@ -57,6 +57,16 @@ function ViewBlogPost() {
       >
         edit
       </Button>
+      {" "}
+      <Button 
+        variant="contained"
+        color="primary"        
+        component={Link} 
+        to={`/`}
+      >
+        back to list
+      </Button>
+
     </Box>
   );
 }

@@ -7,7 +7,7 @@ import { TextField, Typography, Grid, Button, Box } from "@material-ui/core";
 
 import { useHistory } from "react-router-dom";
 
-import { Formik } from "formik";
+import { Formik, FormikHelpers } from "formik";
 
 import * as Yup from "yup";
 import { CreateResultBody } from "../../types/Create";
@@ -49,7 +49,9 @@ function EditBlogPost() {
     return <Box m={2}>LOADING...</Box>;
   }
 
-  const handleSubmit = (values: FormData) => {
+  const handleSubmit = (values: FormData, formikHelpers: FormikHelpers<any>) => {
+    formikHelpers.setSubmitting(true);
+
     fetch(`/blog/${postId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -58,10 +60,20 @@ function EditBlogPost() {
         content: values.content,
       }),
     })
-      .then((data) => data.json())
+      .then((respone) => {
+        if(respone.ok) {
+          return respone.json();
+        } else {
+          return Promise.reject('error 404')
+        }
+      })
       .then((data: CreateResultBody) => {
+        formikHelpers.setSubmitting(false);
         history.push(`/view/${data.id}`);
-      });
+      }).catch((error) => { 
+        formikHelpers.setSubmitting(false);
+        console.log(error)}
+      ) ;
   };
 
   return (
@@ -81,7 +93,6 @@ function EditBlogPost() {
           isSubmitting,
           isValid,
           submitForm,
-          handleReset
         }) => (
           <form onSubmit={handleFormikSubmit}>
             <Typography variant="h5" gutterBottom>
