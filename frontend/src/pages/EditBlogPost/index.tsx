@@ -93,6 +93,7 @@ function EditBlogPost() {
           isSubmitting,
           isValid,
           submitForm,
+          setFieldTouched,
         }) => (
           <form onSubmit={handleFormikSubmit}>
             <Typography variant="h5" gutterBottom>
@@ -104,6 +105,10 @@ function EditBlogPost() {
                   name="title"
                   label="Title"
                   onChange={handleChange}
+                  onInput={e => {
+                    setFieldTouched("title", true, true)
+                    handleChange(e);
+                  }}
                   onBlur={handleBlur}
                   value={values.title}
                   required
@@ -123,6 +128,10 @@ function EditBlogPost() {
                   multiline
                   rows={10}
                   onChange={handleChange}
+                  onInput={e => {
+                    setFieldTouched("content", true, true)
+                    handleChange(e);
+                  }}
                   onBlur={handleBlur}
                   value={values.content}
                   required
@@ -144,7 +153,7 @@ function EditBlogPost() {
                     variant="contained"
                     color="primary"
                     onClick={submitForm}
-                    disabled={isSubmitting || !isValid}
+                    disabled={isSubmitting || !isValid || touched.content ? !touched.content : true || touched.title ? !touched.title : true}
                   >
                     Update
                   </Button>
