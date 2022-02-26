@@ -11,7 +11,7 @@ import { PostList } from "../../types/List";
 
 function BlogPostList() {
   const history = useHistory();
-  
+
   const [posts, setPosts] = useState<PostList | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -46,7 +46,7 @@ function BlogPostList() {
     return <Box m={2}>LOADING...</Box>;
   }
 
-  if (!posts.length) {
+  if (!posts.length && queryOffset === 0) {
     return (
       <Box m={2}>
         NO POSTS FOUND, <Link to="/create">CREATE A NEW POST</Link>
