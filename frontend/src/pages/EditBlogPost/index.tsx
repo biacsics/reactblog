@@ -147,8 +147,7 @@ function EditBlogPost() {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid container spacing={3} direction="row">
-                <Grid item sm={1}>
+                <Grid item sm={12}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -157,9 +156,7 @@ function EditBlogPost() {
                   >
                     Update
                   </Button>
-                </Grid>
-
-                <Grid item sm={1}>
+                  {" "}
                   <Button 
                     variant="contained"
                     color="primary"        
@@ -170,7 +167,6 @@ function EditBlogPost() {
                   </Button>
                 </Grid>
 
-              </Grid>
             </Grid>
           </form>
         )}

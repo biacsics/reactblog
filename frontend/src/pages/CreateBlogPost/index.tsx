@@ -113,28 +113,25 @@ function CreateBlogPost() {
                   InputLabelProps={{ shrink: true }}
                 />
               </Grid>
-              <Grid container spacing={3} direction="row">
-                <Grid item sm={2}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={submitForm}
-                    disabled={isSubmitting || !isValid || (touched.content ? !touched.content : true || touched.title ? !touched.title : true)}
-                  >
-                    Submit
-                  </Button>
-                </Grid>
-                <Grid item sm={2}>
-                  <Button 
-                    variant="contained"
-                    color="primary"        
-                    component={Link} 
-                    to={`/`}
-                  >
-                    Cancel
-                  </Button>
-                </Grid>              
-              </Grid>
+              <Grid item sm={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={submitForm}
+                  disabled={isSubmitting || !isValid || (touched.content ? !touched.content : true || touched.title ? !touched.title : true)}
+                >
+                  create
+                </Button>
+                {" "}
+                <Button 
+                  variant="contained"
+                  color="primary"        
+                  component={Link} 
+                  to={`/`}
+                >
+                  Cancel
+                </Button>
+              </Grid>              
             </Grid>
           </form>
         )}
