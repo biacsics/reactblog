@@ -1,11 +1,13 @@
 import { getConnection } from 'typeorm';
 import Blog from '../db/entities/Blog';
 
-export async function getBlogList(): Promise<Blog[]> {
+export async function getBlogList(offset:number = 0, limit:number = 5): Promise<Blog[]> {
     return await getConnection().transaction(async (manager) => {
         const items = await manager
             .createQueryBuilder(Blog, 'blog')
             .select(['blog.id', 'blog.publishedAt', 'blog.modifiedAt', 'blog.title'])
+            .skip(offset * limit)
+            .take(limit)            
             .getMany();
 
         return items;

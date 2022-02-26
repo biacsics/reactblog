@@ -1,12 +1,12 @@
-import { Get, JsonController, Param, Post, BodyParam, Patch } from 'routing-controllers';
+import { Get, JsonController, Param, Post, BodyParam, Patch, QueryParam } from 'routing-controllers';
 import { BlogListResult, CreateBlogResultBody, SingleBlogResult } from '../../typings/Blog';
 import * as BlogService from '../../blog/Blog';
 
 @JsonController('/blog')
 export default class BlogController {
     @Get('/')
-    async list(): Promise<BlogListResult> {
-        const list = await BlogService.getBlogList();
+    async list(@QueryParam('offset') offset: number, @QueryParam('limit') limit: number): Promise<BlogListResult> {        
+        const list = await BlogService.getBlogList(offset, limit);
         return list;
     }
 
